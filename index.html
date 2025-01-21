@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monetag Bot</title>
+    <script type='text/javascript' src='//pl24448707.profitablecpmrate.com/8c/90/7a/8c907a946c2576df317d5f00a5f46be7.js'></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        main {
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .status-message {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .status-message.insufficient {
+            color: red;
+        }
+        .status-message.success {
+            color: green;
+        }
+        .developer-credit {
+            font-size: 14px;
+            text-align: center;
+            margin-top: 20px;
+            color: green;
+            cursor: pointer;
+        }
+        .developer-credit:hover {
+            text-decoration: underline;
+        }
+        .min-withdraw-note {
+            color: orange;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Premium Thinking Monetag Earning Bot</h1>
+    </header>
+    <main>
+        <div class="card">
+            <h3>Today's Tasks</h3>
+            <p>Total Tasks: <span id="total-tasks">1000</span></p>
+            <p>Completed: <span id="completed-tasks">0</span></p>
+            <p>Remaining: <span id="remaining-tasks">1000</span></p>
+            <p class="min-withdraw-note">Minimum withdrawal: 0.1 BDT</p> <!-- Minimum withdrawal note added after Remaining -->
+            <button id="start-task-btn" onclick="startTask()">Start Task Monetag</button>
+        </div>
+        <div class="card">
+            <h3>Available Balance</h3>
+            <p>BDT: <span id="balance">0.0</span></p>
+            <button class="withdraw-btn" id="withdraw-btn" onclick="toggleWithdrawForm()">Submit Withdrawal</button>
+        </div>
+
+        <!-- Withdraw Section -->
+        <div class="card" id="withdraw-section" style="display: none;">
+            <h3>Withdraw Request</h3>
+            <input type="number" id="withdraw-amount" placeholder="Enter Amount to Withdraw" />
+            <select id="payment-method">
+                <option value="PayPal">PayPal</option>
+                <option value="Binance">Binance</option>
+            </select>
+            <input type="text" id="withdraw-email" placeholder="Enter Email" />
+            <button onclick="submitWithdrawal()">Submit Request</button>
+            <p id="withdraw-status" class="status-message"></p>
+        </div>
+
+        <!-- Developer Credit -->
+        <div class="developer-credit" onclick="window.open('https://t.me/Premiumthinking', '_blank')">
+            Developed by Premium Thinking
+        </div>
+    </main>
+
+    <script src='//jagnaimsee.net/vignette.min.js' data-zone='8820501' data-sdk='show_8820501'></script>
+
+    <script>
+        // Initialize the variables
+        const MIN_WITHDRAWAL = 0.1;
+        const BOT_API_KEY = "7935458850:AAE_iD4RukcLxaqSbygkjUIkwJlJT72PWLs";
+        const PAYMENT_CHANNEL = "@testpt2";
+
+        // Retrieve data from localStorage or initialize them to 0
+        let totalTasks = 1000;
+        let completedTasks = parseInt(localStorage.getItem('completedTasks')) || 0; // Retrieve from localStorage or set to 0
+        let remainingTasks = totalTasks - completedTasks;
+        let balance = parseFloat(localStorage.getItem('balance')) || 0.0; // Retrieve from localStorage or set to 0.0
+
+        // Retrieve last reset date
+        let lastResetDate = localStorage.getItem('lastResetDate') || null;
+
+        // Function to check if it's a new day
+        function isNewDay() {
+            const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+            return currentDate !== lastResetDate;
+        }
+
+        // Reset the tasks and balance if it's a new day
+        function resetDailyTasks() {
+            if (isNewDay()) {
+                completedTasks = 0;
+                remainingTasks = totalTasks;
+                balance = 0.0;
+                localStorage.setItem('completedTasks', completedTasks);
+                localStorage.setItem('remainingTasks', remainingTasks);
+                localStorage.setItem('balance', balance.toFixed(2));
+                localStorage.setItem('lastResetDate', new Date().toISOString().split('T')[0]);
+            }
+        }
+
+        // Update the UI with stored data
+        function updateUI() {
+            document.getElementById('completed-tasks').textContent = completedTasks;
+            document.getElementById('remaining-tasks').textContent = remainingTasks;
+            document.getElementById('balance').textContent = balance.toFixed(2);
+        }
+
+        // Start the task and show ad
+        function startTask() {
+            if (typeof show_8820501 === 'function') {
+                show_8820501().then(() => {
+                    completedTasks++;
+                    remainingTasks--;
+                    balance += 0.10; // Earn 0.10 BDT per task
+                    updateUI();
+                    saveState(); // Save updated state to localStorage
+                }).catch(err => {
+                    alert("Failed to load ad. Try again later.");
+                });
+            } else {
+                alert("Ad loading function is unavailable. Please try again later.");
+            }
+        }
+
+        // Save the updated state to localStorage
+        function saveState() {
+            localStorage.setItem('completedTasks', completedTasks);
+            localStorage.setItem('balance', balance.toFixed(2));
+        }
+
+        // Toggle the withdraw form visibility
+        function toggleWithdrawForm() {
+            document.getElementById("withdraw-section").style.display = "block";
+        }
+
+        // Handle withdrawal request
+        function submitWithdrawal() {
+            const withdrawAmount = parseFloat(document.getElementById("withdraw-amount").value);
+            const paymentMethod = document.getElementById("payment-method").value;
+            const email = document.getElementById("withdraw-email").value;
+
+            if (withdrawAmount < MIN_WITHDRAWAL) {
+                document.getElementById("withdraw-status").textContent = `Minimum withdrawal is ${MIN_WITHDRAWAL} BDT.`;
+                document.getElementById("withdraw-status").classList.add("insufficient");
+                document.getElementById("withdraw-status").classList.remove("success");
+                return;
+            }
+
+            if (withdrawAmount > balance) {
+                document.getElementById("withdraw-status").textContent = "Insufficient balance.";
+                document.getElementById("withdraw-status").classList.add("insufficient");
+                document.getElementById("withdraw-status").classList.remove("success");
+                return;
+            }
+
+            // Send withdrawal request to Telegram bot
+            const message = `ðŸ”” Withdrawal Request:\nðŸ‘¤ User: @exampleUser\nðŸ’° Amount: ${withdrawAmount}\nðŸ’³ Payment Method: ${paymentMethod}\nðŸ“§ Email: ${email}`;
+            
+            fetch(`https://api.telegram.org/bot${BOT_API_KEY}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: PAYMENT_CHANNEL,
+                    text: message,
+                    parse_mode: "Markdown",
+                }),
+            })
+            .then(() => {
+                balance -= withdrawAmount;
+                document.getElementById("withdraw-status").textContent = `Request submitted for ${withdrawAmount} BDT via ${paymentMethod} to ${email}.`;
+                document.getElementById("withdraw-status").classList.add("success");
+                document.getElementById("withdraw-status").classList.remove("insufficient");
+                updateUI();
+                saveState(); // Save state after withdrawal
+            })
+            .catch(() => {
+                document.getElementById("withdraw-status").textContent = "Failed to send withdrawal request.";
+                document.getElementById("withdraw-status").classList.add("insufficient");
+                document.getElementById("withdraw-status").classList.remove("success");
+            });
+        }
+
+        // Initialize the page with the current state and reset tasks if it's a new day
+        resetDailyTasks();
+        updateUI();
+    </script>
+</body>
+</html>
